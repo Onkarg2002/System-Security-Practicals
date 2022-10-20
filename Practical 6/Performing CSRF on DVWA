@@ -1,0 +1,56 @@
+CSRF (Cross-site Request Forgery)
+
+# Install burpsuite
+sudo apt install burpsuite
+
+# Open Burpsuite
+burpsuite
+
+# Accept all prompts, once burpsuite is on
+
+# Go to Proxy > Intercept 
+Turn Incerpt to off if it is on
+
+#Click on Open Browser
+
+# This is the browser provided by burpsuite on which we will try CSRF
+
+
+#Once the browser is open enter the dvwa login url
+127.0.0.1/dvwa/
+
+# Enter username "admin" and password "password"
+
+Set DVWA Security to low
+
+Go to CSRF
+
+# Go to burpsuite and turn Intercept to on
+Once intercept is on it will capture all the requests sent by the victim
+
+# Enter new password and confirm password then click on change
+
+Burpsuite will open once you click on change you can see the generated url for changing 
+password 
+# We can use this url by sending it to someone else and once clicked by them the
+password of their account will be changed by our specified one!
+
+So now we can see the password entered by victim i.e "2001" on the first line
+So as an hacker we can change the password and click on Intercept to off so it will 
+send the given request from victims machine to the server
+
+# Once you turn off Intercept the req will be sent and you will see password changed
+# Note: you will use this password as your DVWA login password so remember it!
+
+# So as we got the password change url we can copy it encode it and send it to different
+user so that query will execute changing the password of their account
+# As this url will be reflected to victim's machine we will encode the url
+select the url and click (ctrl + u)
+
+eg. 
+# Generated Url
+GET 127.0.0.1/dvwa/vulnerabilities/csrf/?password_new=password&password_conf=password&Change=Change
+
+# Encoded Url
+GET /dvwa/vulnerabilities/csrf/?password_new%3dpassword%26password_conf%3dpassword%26Change%3dChange 
+(Encoded url will be after "GET /dvwa/vulnerabilities/csrf/?")
