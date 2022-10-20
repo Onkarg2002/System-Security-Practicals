@@ -1,0 +1,102 @@
+# Downloading and configuring DVWA
+
+# Move to this directory where localhost files of kali are stored
+cd /var/www/html
+
+#Cloning dvwa in the above directory
+sudo git clone https://github.com/digininja/DVWA
+
+#Moving DVWA to dvwa directory
+sudo mv DVWA dvwa
+
+# Setting read, write, execute permissions to dvwa directory
+sudo chmod -R 777 dvwa/
+
+# Configuring dvwa
+cd dvwa/config
+
+# copy the config file to new file with .php extension
+sudo cp config.inc.php.dist config.inc.php
+
+# Opening config file to change username and password
+sudo nano config.inc.php
+#make db_user to user and db_password to pass
+
+# Save the file(Ctrl + O, then Enter) and Exit(Ctrl + X)
+
+# Installing MySQL
+
+sudo apt install default-mysql-server
+
+# Configuring Mysql
+sudo service mysql start
+
+# Checking if the service is running or not
+systemctl status mysql
+# press q if your done checking
+
+# Logging into mysql
+sudo mysql -u root -p
+
+# Creating new user in DVWA application config file
+create user 'user'@'127.0.0.1' identified by 'pass';
+
+# Granting all privilege over the dvwa database to our created user
+grant all privileges on dvwa.* to 'user'@'127.0.0.1' identified by 'pass';
+# use "exit" command to exit from mysql and return to terminal
+
+# Installing PHP
+sudo apt update
+sudo apt -y install lsb-release apt-transport-https ca-certificates
+sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+echo "deb https://packages.sury.org/php/ buster main" | sudo tee /etc/apt/sources.list.d/php.list
+
+# Installing php
+sudo apt update
+sudo apt install php7.4 -y
+
+# Installing php extension
+sudo apt install php7.4-{cli,json,imap,bcmath,bz2,intl,gd,mbstring,mysql,zip}
+# line has error (viersion conflicts with different packages)
+
+# Configure Apache Server
+cd /etc/php/7.4/apache2
+
+# Checking apache server
+ls /etc/php
+
+# Configure localhost server
+sudo nano php.ini
+#Scroll down and look for these two lines: allow_url_fopen and allow_url_include. 
+#Set them both as On.
+
+# Save the file(Ctrl + O, then Enter) and Exit(Ctrl + X)
+
+# Starting Apache server
+sudo service apache2 start
+
+# To check if the service has started successfully
+systemctl status apache2
+#press q if you see acitve (running)
+#That means your service is running properly
+
+# Now access DVWA on your browser
+#Open Browser and enter the link
+# http://127.0.0.1/dvwa/
+
+# Now click on create database on the bottom of the page
+# A login window will open 
+# username - "admin"
+# password - "password"
+
+# Go to DVWA Security and set it to high
+# Then click to submit
+
+# Go to SQL injection
+# Double click on "Click here to change your ID"
+
+# Perform sql injection using
+#'or'1'='1
+#' or 0=0 union select null, user() #
+
+

