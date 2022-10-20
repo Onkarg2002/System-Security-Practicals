@@ -1,0 +1,51 @@
+sudo apt update
+sudo apt install nikto
+man nikto
+nikto -help
+nikto -h linuxhint.com
+nikto -h linuxhint.com -ssl
+nikto -h pbs.org -ssl
+sudo ifconfig
+sudo nmap -p 80 192.168.204.128 -oG linuxhint.txt
+cat linuxhint.txt
+cat linuxhint.txt | awk '/p$/{print $2}' | cat >> targetIP.txt
+cat targetIP.txt
+nikto -h targetIP.txt
+
+nikto -h vulnweb.com
+nikto -h example.com
+nikto -host 44.228.249.3
+nikto -host 93.184.216.34
+nikto -list-plugins
+nikto -Plugins outdated -host 44.228.249.3
+nikto -Plugins outdated -host 93.184.216.34
+nikto -Plugins -httpoptions -host 44.228.249.3
+nikto -Plugins -httpoptions -host 93.184.216.34
+nikto -Plugins msgs -host 44.228.249.3
+nikto -Plugins msgs -host 93.184.216.34
+nikto -Plugins tests -host 44.228.249.3
+nikto -Plugins tests -host 93.184.216.34
+nikto -host 44.228.249.3 -output vulnweb_report.html
+nikto -host 93.184.216.34 -output example_report.html
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Prac 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+sudo apt update
+sudo apt install nikto
+nikto -host vulnweb.com -o vulnweb.txt
+nikto -host vulnweb.com -o vulnweb.csv
+nikto -host vulnweb.com -o vulnweb.html
+nikto -host example.com -o example.txt -o example.csv -o example.html
+sudo ifconfig
+sudo nmap -p 80 192.168.204.128/25 -oG linuxhint.txt
+cat linuxhint.txt
+cat linuxhint.txt | awk '/p$/{print $2}' | cat >> targetIP.txt
+cat targetIP.txt
+nikto -h targetIP.txt
+nikto -h pbs.org -ssl
+sudo nmap -p 80 192.168.0.0/25
+
+
+
